@@ -25,7 +25,7 @@ public class MobileDragAndDropTest implements IAbstractTest {
     @TestLabel(name = "feature", value = {"mobile", "acceptance"})
     public void testDragAndDrop() {
         R.CONFIG.put("capabilities.platformName", "Android");
-        R.CONFIG.put("capabilities.deviceName", "emulator-5554"); // Replace "emulator-5554" with the name of your emulated device
+        R.CONFIG.put("capabilities.deviceName", "nightwatch-android-11"); // Replace "emulator-5554" with the name of your emulated device
         R.CONFIG.put("capabilities.appium:address", "10.35.11.208"); // Specify the IP address of the machine running the Appium server
         R.CONFIG.put("capabilities.appium:port", "4723"); // Specify the port of the Appium server
         R.CONFIG.put("capabilities.app", "https://github.com/appium/java-client/raw/master/src/test/resources/apps/ApiDemos-debug.apk");
