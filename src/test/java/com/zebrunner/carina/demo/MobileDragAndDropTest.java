@@ -24,22 +24,24 @@ public class MobileDragAndDropTest implements IAbstractTest {
     @MethodOwner(owner = "qpsdemo")
     @TestLabel(name = "feature", value = {"mobile", "acceptance"})
     public void testDragAndDrop() {
-        R.CONFIG.put("capabilities.platformName", "Android");
-        R.CONFIG.put("capabilities.deviceName", "nightwatch-android-11"); // Replace "emulator-5554" with the name of your emulated device
-        R.CONFIG.put("capabilities.appium:address", "10.35.11.208"); // Specify the IP address of the machine running the Appium server
-        R.CONFIG.put("capabilities.appium:port", "4723"); // Specify the port of the Appium server
-        R.CONFIG.put("capabilities.app", "https://github.com/appium/java-client/raw/master/src/test/resources/apps/ApiDemos-debug.apk");
-        R.CONFIG.put("capabilities.appActivity", ".view.DragAndDropDemo");
-        R.CONFIG.put("capabilities.automationName", "UiAutomator2");
+        UiAutomator2Options options = new UiAutomator2Options();
+        options.setPlatformName("Android"); //optional
+        options.setAutomationName(AutomationName.ANDROID_UIAUTOMATOR2);//optional
+        //options.setCapability("udid", "9889a4315133493650"); //CHANGE THE UDID BASED ON DEVICE, MAY NOT BE REQUIRED. S/N ENDS in 6T
+        options.setDeviceName("amuthan-test-device");
+        options.setApp(System.getProperty("user.dir") + "/apps/Android-MyDemoAppRN.1.3.0.build-244.apk"); //replace with BYUtv apk
 
-
-        
-
-        DragAndDropPage dragAndDropPage = new DragAndDropPage(getDriver());
-        dragAndDropPage.dragDown();
-        dragAndDropPage.dragRight();
-        dragAndDropPage.dragDiagonal();
-        Assert.assertTrue(dragAndDropPage.isDragAndDropMessagePresent(), "Should be provided pop up message after successful drag and drop");
+        @SuppressWarnings("deprecation") //ADDED TO SUPPORT USB TESTING
+        AndroidDriver driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), options);
+        driver.findElement(AppiumBy.accessibilityId("open menu")).click();
+        /*new WebDriverWait(driver, Duration.ofSeconds(10))
+        .until(e->e.findElement(By.xpath("//android.view.ViewGroup[@content-desc=\"menu item log in\"]")));
+ */
+        driver.findElement(By.xpath("//android.view.ViewGroup[@content-desc=\"menu item log in\"]"))
+            .click();
+        Thread.sleep(5000);
+        driver.findElement(AppiumBy.accessibilityId("Username input field")).sendKeys("BYU BROADCASTING");
+        driver.quit();
     }
 
 
